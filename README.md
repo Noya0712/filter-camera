@@ -2,6 +2,11 @@
 
 A new Flutter project.
 
+3. menandakan bahwa fungsi tersebut mengandung operasi asynchronous,
+menjalankan tugas yang mungkin memakan waktu tanpa harus menunggu sampai tugas tersebut selesai
+
+4. @immutable digunakan untuk menandai sebuah kelas sebagai immutable, berarti objek dari kelas tersebut tidak dapat diubah setelah objek dibuat
+   @override digunakan untuk menunjukkan metode dalam subclass menimpa metode yang sudah ada pada superclass.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
