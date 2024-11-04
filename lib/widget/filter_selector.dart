@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart' show ViewportOffset;
 import 'package:photo_filter_carousel/widget/carousel_flowdelegate.dart';
 import 'package:photo_filter_carousel/widget/filter_item.dart';
 
-
 @immutable
 class FilterSelector extends StatefulWidget {
   const FilterSelector({
@@ -15,16 +14,21 @@ class FilterSelector extends StatefulWidget {
   final List<Color> filters;
   final void Function(Color selectedColor) onFilterChanged;
   final EdgeInsets padding;
+
   @override
   State<FilterSelector> createState() => _FilterSelectorState();
 }
+
 class _FilterSelectorState extends State<FilterSelector> {
   static const _filtersPerScreen = 5;
   static const _viewportFractionPerItem = 1.0 / _filtersPerScreen;
   late final PageController _controller;
   late int _page;
+
   int get filterCount => widget.filters.length;
+
   Color itemColor(int index) => widget.filters[index % filterCount];
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +39,7 @@ class _FilterSelectorState extends State<FilterSelector> {
     );
     _controller.addListener(_onPageChanged);
   }
+
   void _onPageChanged() {
     final page = (_controller.page ?? 0).round();
     if (page != _page) {
@@ -50,11 +55,13 @@ class _FilterSelectorState extends State<FilterSelector> {
       curve: Curves.ease,
     );
   }
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scrollable(
@@ -64,12 +71,10 @@ class _FilterSelectorState extends State<FilterSelector> {
       viewportBuilder: (context, viewportOffset) {
         return LayoutBuilder(
           builder: (context, constraints) {
-            final itemSize = constraints.maxWidth *
-                _viewportFractionPerItem;
+            final itemSize = constraints.maxWidth * _viewportFractionPerItem;
             viewportOffset
               ..applyViewportDimension(constraints.maxWidth)
-              ..applyContentDimensions(0.0, itemSize * (filterCount -
-                  1));
+              ..applyContentDimensions(0.0, itemSize * (filterCount - 1));
             return Stack(
               alignment: Alignment.bottomCenter,
               children: [
@@ -86,9 +91,10 @@ class _FilterSelectorState extends State<FilterSelector> {
       },
     );
   }
+
   Widget _buildShadowGradient(double itemSize) {
     return SizedBox(
-        height: itemSize * 2 + widget.padding.vertical,
+      height: itemSize * 2 + widget.padding.vertical,
       child: const DecoratedBox(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -104,6 +110,7 @@ class _FilterSelectorState extends State<FilterSelector> {
       ),
     );
   }
+
   Widget _buildCarousel({
     required ViewportOffset viewportOffset,
     required double itemSize,
@@ -126,6 +133,7 @@ class _FilterSelectorState extends State<FilterSelector> {
       ),
     );
   }
+
   Widget _buildSelectionRing(double itemSize) {
     return IgnorePointer(
       child: Padding(

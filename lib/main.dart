@@ -1,10 +1,19 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_filter_carousel/widget/filter_carousel.dart';
+import 'package:photo_filter_carousel/red_text_wiget.dart';
+import 'package:photo_filter_carousel/widget/takepicture_widget.dart';
 
+Future<void> main() async {
+  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  final cameras = await availableCameras();
+  final firstCamera = cameras.first;
 
-void main() {
-  runApp(const MaterialApp(
-    home: PhotoFilterCarousel(),
+  runApp(MaterialApp(
+    theme: ThemeData.dark(),
+    home: TakePictureWidget(
+      camera: firstCamera,
+    ),
     debugShowCheckedModeBanner: false,
   ));
 }
@@ -64,11 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
@@ -110,12 +114,19 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Container(
+              color: Colors.yellowAccent,
+              width: 50,
+              child: const RedTextWidget(
+                text: 'You have pushed the button this many times:',
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Container(
+              color: Colors.greenAccent,
+              width: 100,
+              child: const Text(
+                'You have pushed the button this many times:',
+              ),
             ),
           ],
         ),
@@ -124,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }
